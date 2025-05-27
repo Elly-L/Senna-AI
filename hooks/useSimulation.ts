@@ -19,12 +19,12 @@ export function useSimulation() {
     setIsActive(false)
   }, [simulator])
 
-  // Update metrics periodically
+  // Update metrics more frequently for smoother animations
   useEffect(() => {
     const interval = setInterval(() => {
       setMetrics(PerformanceSimulator.generateMetrics())
       setNetworkStatus(NetworkSimulator.getStatus())
-    }, 5000)
+    }, 2000) // Changed from 5000 to 2000ms
 
     return () => clearInterval(interval)
   }, [])

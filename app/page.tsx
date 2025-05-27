@@ -46,7 +46,6 @@ import {
   WifiOff,
   Loader2,
   XCircle,
-  Activity,
   Target,
   Clock,
 } from "lucide-react"
@@ -109,7 +108,7 @@ const initialThreatAlerts = [
 
 const initialAnomalies = [
   {
-    user: "john.doe@company.com",
+    user: "john.doe@gmail.com",
     anomaly: "Unusual Access Time",
     confidence: 89,
     lastSeen: "3m ago",
@@ -117,7 +116,7 @@ const initialAnomalies = [
     isNew: false,
   },
   {
-    user: "sarah.smith@company.com",
+    user: "sarah.smith@proton.me",
     anomaly: "Geographic Anomaly",
     confidence: 76,
     lastSeen: "15m ago",
@@ -125,7 +124,7 @@ const initialAnomalies = [
     isNew: false,
   },
   {
-    user: "mike.wilson@company.com",
+    user: "mike.wilson@outlook.com",
     anomaly: "Data Access Pattern",
     confidence: 92,
     lastSeen: "22m ago",
@@ -169,9 +168,9 @@ function ThreatLevelBadge({ level, isNew = false }: { level: string; isNew?: boo
   }
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-1 sm:gap-2">
       <Badge
-        className={`${colors[level as keyof typeof colors]} border shadow-lg font-medium ${isNew ? "animate-pulse" : ""}`}
+        className={`${colors[level as keyof typeof colors]} border shadow-lg font-medium text-xs sm:text-sm ${isNew ? "animate-pulse" : ""}`}
       >
         {level}
       </Badge>
@@ -190,7 +189,9 @@ function ConfidenceBadge({ score, isNew = false }: { score: number; isNew?: bool
   }
 
   return (
-    <Badge className={`${colorClass} border shadow-lg font-medium ${isNew ? "animate-pulse" : ""}`}>{score}%</Badge>
+    <Badge className={`${colorClass} border shadow-lg font-medium text-xs sm:text-sm ${isNew ? "animate-pulse" : ""}`}>
+      {score}%
+    </Badge>
   )
 }
 
@@ -198,29 +199,29 @@ function ThreatChart({ chartData }: { chartData: any[] }) {
   const maxValue = Math.max(...chartData.flatMap((d) => [d.critical, d.high, d.medium, d.low]))
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Legend with colored pills */}
-      <div className="flex items-center gap-6 text-sm">
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 bg-red-500 rounded-full shadow-lg shadow-red-500/50"></div>
+      <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-xs sm:text-sm">
+        <div className="flex items-center gap-1 sm:gap-2">
+          <div className="w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full shadow-lg shadow-red-500/50"></div>
           <span className="text-gray-400">Critical</span>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 bg-orange-500 rounded-full shadow-lg shadow-orange-500/50"></div>
+        <div className="flex items-center gap-1 sm:gap-2">
+          <div className="w-2 h-2 sm:w-3 sm:h-3 bg-orange-500 rounded-full shadow-lg shadow-orange-500/50"></div>
           <span className="text-gray-400">High</span>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 bg-yellow-500 rounded-full shadow-lg shadow-yellow-500/50"></div>
+        <div className="flex items-center gap-1 sm:gap-2">
+          <div className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-500 rounded-full shadow-lg shadow-yellow-500/50"></div>
           <span className="text-gray-400">Medium</span>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 bg-green-500 rounded-full shadow-lg shadow-green-500/50"></div>
+        <div className="flex items-center gap-1 sm:gap-2">
+          <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-full shadow-lg shadow-green-500/50"></div>
           <span className="text-gray-400">Low</span>
         </div>
       </div>
 
       {/* Chart with neon glow effects */}
-      <div className="relative h-64 bg-gray-900/50 rounded-lg p-4 border border-gray-700">
+      <div className="relative h-48 sm:h-64 bg-gray-900/50 rounded-lg p-2 sm:p-4 border border-gray-700 overflow-hidden">
         <svg width="100%" height="100%" className="overflow-visible">
           <defs>
             <filter id="glow">
@@ -250,7 +251,7 @@ function ThreatChart({ chartData }: { chartData: any[] }) {
           <polyline
             fill="none"
             stroke="#ef4444"
-            strokeWidth="3"
+            strokeWidth="2"
             filter="url(#glow)"
             points={chartData
               .map((d, i) => `${(i / (chartData.length - 1)) * 100},${100 - (d.critical / maxValue) * 80}`)
@@ -261,7 +262,7 @@ function ThreatChart({ chartData }: { chartData: any[] }) {
           <polyline
             fill="none"
             stroke="#f97316"
-            strokeWidth="3"
+            strokeWidth="2"
             filter="url(#glow)"
             points={chartData
               .map((d, i) => `${(i / (chartData.length - 1)) * 100},${100 - (d.high / maxValue) * 80}`)
@@ -272,7 +273,7 @@ function ThreatChart({ chartData }: { chartData: any[] }) {
           <polyline
             fill="none"
             stroke="#eab308"
-            strokeWidth="3"
+            strokeWidth="2"
             filter="url(#glow)"
             points={chartData
               .map((d, i) => `${(i / (chartData.length - 1)) * 100},${100 - (d.medium / maxValue) * 80}`)
@@ -283,7 +284,7 @@ function ThreatChart({ chartData }: { chartData: any[] }) {
           <polyline
             fill="none"
             stroke="#22c55e"
-            strokeWidth="3"
+            strokeWidth="2"
             filter="url(#glow)"
             points={chartData
               .map((d, i) => `${(i / (chartData.length - 1)) * 100},${100 - (d.low / maxValue) * 80}`)
@@ -296,28 +297,28 @@ function ThreatChart({ chartData }: { chartData: any[] }) {
               <circle
                 cx={`${(i / (chartData.length - 1)) * 100}%`}
                 cy={`${100 - (d.critical / maxValue) * 80}%`}
-                r="4"
+                r="3"
                 fill="#ef4444"
                 filter="url(#glow)"
               />
               <circle
                 cx={`${(i / (chartData.length - 1)) * 100}%`}
                 cy={`${100 - (d.high / maxValue) * 80}%`}
-                r="4"
+                r="3"
                 fill="#f97316"
                 filter="url(#glow)"
               />
               <circle
                 cx={`${(i / (chartData.length - 1)) * 100}%`}
                 cy={`${100 - (d.medium / maxValue) * 80}%`}
-                r="4"
+                r="3"
                 fill="#eab308"
                 filter="url(#glow)"
               />
               <circle
                 cx={`${(i / (chartData.length - 1)) * 100}%`}
                 cy={`${100 - (d.low / maxValue) * 80}%`}
-                r="4"
+                r="3"
                 fill="#22c55e"
                 filter="url(#glow)"
               />
@@ -326,7 +327,7 @@ function ThreatChart({ chartData }: { chartData: any[] }) {
         </svg>
 
         {/* X-axis labels */}
-        <div className="absolute bottom-0 left-0 right-0 flex justify-between px-4 pb-2">
+        <div className="absolute bottom-0 left-0 right-0 flex justify-between px-2 sm:px-4 pb-1 sm:pb-2">
           {chartData.map((data, index) => (
             <span key={index} className="text-xs text-gray-400">
               {data.time}
@@ -354,45 +355,53 @@ function SettingsModal() {
           Settings
         </DropdownMenuItem>
       </DialogTrigger>
-      <DialogContent className="bg-gray-800 border-gray-700 text-white max-w-2xl max-h-[80vh]">
+      <DialogContent className="bg-gray-800 border-gray-700 text-white max-w-[95vw] sm:max-w-2xl max-h-[90vh] sm:max-h-[80vh]">
         <DialogHeader>
           <DialogTitle className="text-white">Settings</DialogTitle>
         </DialogHeader>
-        <ScrollArea className="h-[60vh] pr-4">
+        <ScrollArea className="h-[70vh] sm:h-[60vh] pr-4">
           <Tabs defaultValue="general" className="w-full">
-            <TabsList className="grid w-full grid-cols-4 bg-gray-700">
-              <TabsTrigger value="general" className="data-[state=active]:bg-cyan-500">
+            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 bg-gray-700">
+              <TabsTrigger value="general" className="data-[state=active]:bg-cyan-500 text-xs sm:text-sm">
                 General
               </TabsTrigger>
-              <TabsTrigger value="security" className="data-[state=active]:bg-cyan-500">
+              <TabsTrigger value="security" className="data-[state=active]:bg-cyan-500 text-xs sm:text-sm">
                 Security
               </TabsTrigger>
-              <TabsTrigger value="notifications" className="data-[state=active]:bg-cyan-500">
+              <TabsTrigger value="notifications" className="data-[state=active]:bg-cyan-500 text-xs sm:text-sm">
                 Notifications
               </TabsTrigger>
-              <TabsTrigger value="advanced" className="data-[state=active]:bg-cyan-500">
+              <TabsTrigger value="advanced" className="data-[state=active]:bg-cyan-500 text-xs sm:text-sm">
                 Advanced
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="general" className="space-y-6 mt-6">
+            <TabsContent value="general" className="space-y-4 sm:space-y-6 mt-4 sm:mt-6">
               <div className="space-y-4">
-                <h3 className="text-lg font-medium">General Settings</h3>
+                <h3 className="text-base sm:text-lg font-medium">General Settings</h3>
                 <div className="grid gap-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="name">Display Name</Label>
+                    <Label htmlFor="name" className="text-sm">
+                      Display Name
+                    </Label>
                     <Input id="name" defaultValue="John Doe" className="bg-gray-700 border-gray-600" />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor="email" className="text-sm">
+                      Email
+                    </Label>
                     <Input id="email" defaultValue="john.doe@company.com" className="bg-gray-700 border-gray-600" />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="timezone">Timezone</Label>
+                    <Label htmlFor="timezone" className="text-sm">
+                      Timezone
+                    </Label>
                     <Input id="timezone" defaultValue="UTC-5 (Eastern)" className="bg-gray-700 border-gray-600" />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="sensitivity">Auto-Response Sensitivity: {autoResponseSensitivity}%</Label>
+                    <Label htmlFor="sensitivity" className="text-sm">
+                      Auto-Response Sensitivity: {autoResponseSensitivity}%
+                    </Label>
                     <input
                       type="range"
                       id="sensitivity"
@@ -404,12 +413,14 @@ function SettingsModal() {
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="retention">Data Retention: {dataRetention} days</Label>
+                    <Label htmlFor="retention" className="text-sm">
+                      Data Retention: {dataRetention} days
+                    </Label>
                     <select
                       id="retention"
                       value={dataRetention}
                       onChange={(e) => setDataRetention(Number(e.target.value))}
-                      className="bg-gray-700 border-gray-600 text-white rounded-md p-2"
+                      className="bg-gray-700 border-gray-600 text-white rounded-md p-2 text-sm"
                     >
                       <option value={7}>7 days</option>
                       <option value={14}>14 days</option>
@@ -420,12 +431,14 @@ function SettingsModal() {
               </div>
             </TabsContent>
 
-            <TabsContent value="security" className="space-y-6 mt-6">
+            <TabsContent value="security" className="space-y-4 sm:space-y-6 mt-4 sm:mt-6">
               <div className="space-y-4">
-                <h3 className="text-lg font-medium">Security Settings</h3>
+                <h3 className="text-base sm:text-lg font-medium">Security Settings</h3>
                 <div className="grid gap-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="current-password">Current Password</Label>
+                    <Label htmlFor="current-password" className="text-sm">
+                      Current Password
+                    </Label>
                     <div className="relative">
                       <Input
                         id="current-password"
@@ -444,16 +457,18 @@ function SettingsModal() {
                     </div>
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="new-password">New Password</Label>
+                    <Label htmlFor="new-password" className="text-sm">
+                      New Password
+                    </Label>
                     <Input id="new-password" type="password" className="bg-gray-700 border-gray-600" />
                   </div>
                 </div>
               </div>
             </TabsContent>
 
-            <TabsContent value="notifications" className="space-y-6 mt-6">
+            <TabsContent value="notifications" className="space-y-4 sm:space-y-6 mt-4 sm:mt-6">
               <div className="space-y-4">
-                <h3 className="text-lg font-medium">Notification Settings</h3>
+                <h3 className="text-base sm:text-lg font-medium">Notification Settings</h3>
                 <div className="grid gap-4">
                   <div className="flex items-center space-x-2">
                     <Switch
@@ -461,10 +476,14 @@ function SettingsModal() {
                       checked={emailNotifications}
                       onCheckedChange={setEmailNotifications}
                     />
-                    <Label htmlFor="email-notifications">Email Notifications</Label>
+                    <Label htmlFor="email-notifications" className="text-sm">
+                      Email Notifications
+                    </Label>
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="slack-webhook">Slack Webhook URL</Label>
+                    <Label htmlFor="slack-webhook" className="text-sm">
+                      Slack Webhook URL
+                    </Label>
                     <Input
                       id="slack-webhook"
                       type="url"
@@ -478,12 +497,14 @@ function SettingsModal() {
               </div>
             </TabsContent>
 
-            <TabsContent value="advanced" className="space-y-6 mt-6">
+            <TabsContent value="advanced" className="space-y-4 sm:space-y-6 mt-4 sm:mt-6">
               <div className="space-y-4">
-                <h3 className="text-lg font-medium">Advanced Settings</h3>
+                <h3 className="text-base sm:text-lg font-medium">Advanced Settings</h3>
                 <div className="grid gap-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="api-key">API Key</Label>
+                    <Label htmlFor="api-key" className="text-sm">
+                      API Key
+                    </Label>
                     <Input
                       id="api-key"
                       type="text"
@@ -492,7 +513,9 @@ function SettingsModal() {
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="server-location">Server Location</Label>
+                    <Label htmlFor="server-location" className="text-sm">
+                      Server Location
+                    </Label>
                     <Input
                       id="server-location"
                       type="text"
@@ -505,8 +528,10 @@ function SettingsModal() {
             </TabsContent>
           </Tabs>
         </ScrollArea>
-        <div className="flex justify-end pt-6">
-          <Button onClick={() => toast("Settings saved!", "success")}>Save Changes</Button>
+        <div className="flex justify-end pt-4 sm:pt-6">
+          <Button onClick={() => toast("Settings saved!", "success")} className="text-sm">
+            Save Changes
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
@@ -626,23 +651,25 @@ function AuthModal() {
           Login
         </DropdownMenuItem>
       </DialogTrigger>
-      <DialogContent className="bg-gray-800 border-gray-700 text-white max-w-md">
+      <DialogContent className="bg-gray-800 border-gray-700 text-white max-w-[95vw] sm:max-w-md max-h-[90vh]">
         <DialogHeader>
           <DialogTitle className="text-white">{isLogin ? "Login" : "Sign Up"}</DialogTitle>
         </DialogHeader>
         <ScrollArea className="max-h-[70vh] pr-4">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
             {error && (
               <Alert className="bg-red-500/10 border-red-500/50 text-red-400">
                 <XCircle className="h-4 w-4" />
-                <AlertDescription>{error}</AlertDescription>
+                <AlertDescription className="text-sm">{error}</AlertDescription>
               </Alert>
             )}
 
             <div className="grid gap-4">
               {!isLogin && (
                 <div className="grid gap-2">
-                  <Label htmlFor="signup-name">Full Name</Label>
+                  <Label htmlFor="signup-name" className="text-sm">
+                    Full Name
+                  </Label>
                   <Input
                     id="signup-name"
                     placeholder="John Doe"
@@ -654,7 +681,9 @@ function AuthModal() {
                 </div>
               )}
               <div className="grid gap-2">
-                <Label htmlFor="auth-email">Email</Label>
+                <Label htmlFor="auth-email" className="text-sm">
+                  Email
+                </Label>
                 <Input
                   id="auth-email"
                   type="email"
@@ -666,7 +695,9 @@ function AuthModal() {
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="auth-password">Password</Label>
+                <Label htmlFor="auth-password" className="text-sm">
+                  Password
+                </Label>
                 <div className="relative">
                   <Input
                     id="auth-password"
@@ -690,7 +721,9 @@ function AuthModal() {
               </div>
               {!isLogin && (
                 <div className="grid gap-2">
-                  <Label htmlFor="confirm-auth-password">Confirm Password</Label>
+                  <Label htmlFor="confirm-auth-password" className="text-sm">
+                    Confirm Password
+                  </Label>
                   <Input
                     id="confirm-auth-password"
                     type="password"
@@ -716,7 +749,7 @@ function AuthModal() {
               )}
             </div>
 
-            <Button type="submit" className="w-full bg-cyan-500 hover:bg-cyan-600" disabled={isLoading}>
+            <Button type="submit" className="w-full bg-cyan-500 hover:bg-cyan-600 text-sm" disabled={isLoading}>
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -731,7 +764,7 @@ function AuthModal() {
               <Button
                 type="button"
                 variant="link"
-                className="text-cyan-400 hover:text-cyan-300"
+                className="text-cyan-400 hover:text-cyan-300 text-sm"
                 onClick={() => {
                   setIsLogin(!isLogin)
                   setError("")
@@ -746,7 +779,7 @@ function AuthModal() {
                 <Button
                   type="button"
                   variant="link"
-                  className="text-gray-400 hover:text-gray-300 text-sm"
+                  className="text-gray-400 hover:text-gray-300 text-xs"
                   onClick={handleForgotPassword}
                 >
                   Forgot password?
@@ -766,40 +799,40 @@ function DocumentationSidebar() {
       <SheetTrigger asChild>
         <Button variant="ghost" size="sm" className="text-gray-400 hover:text-white">
           <HelpCircle className="h-4 w-4 mr-2" />
-          Help
+          <span className="hidden sm:inline">Help</span>
         </Button>
       </SheetTrigger>
-      <SheetContent className="bg-gray-800 border-gray-700 text-white w-96">
+      <SheetContent className="bg-gray-800 border-gray-700 text-white w-[90vw] sm:w-96">
         <SheetHeader>
           <SheetTitle className="text-white">User Guide</SheetTitle>
         </SheetHeader>
         <ScrollArea className="h-full mt-6">
           <div className="space-y-6">
             <div>
-              <h3 className="font-semibold mb-2">Severity Levels</h3>
+              <h3 className="font-semibold mb-2 text-sm sm:text-base">Severity Levels</h3>
               <div className="space-y-2 text-sm">
                 <div className="flex items-center gap-2">
                   <ThreatLevelBadge level="Critical" />
-                  <span>Immediate action required</span>
+                  <span className="text-xs sm:text-sm">Immediate action required</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <ThreatLevelBadge level="High" />
-                  <span>High priority investigation</span>
+                  <span className="text-xs sm:text-sm">High priority investigation</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <ThreatLevelBadge level="Medium" />
-                  <span>Monitor and review</span>
+                  <span className="text-xs sm:text-sm">Monitor and review</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <ThreatLevelBadge level="Low" />
-                  <span>Informational alert</span>
+                  <span className="text-xs sm:text-sm">Informational alert</span>
                 </div>
               </div>
             </div>
 
             <div>
-              <h3 className="font-semibold mb-2">Chat Commands</h3>
-              <div className="space-y-1 text-sm text-gray-300">
+              <h3 className="font-semibold mb-2 text-sm sm:text-base">Chat Commands</h3>
+              <div className="space-y-1 text-xs sm:text-sm text-gray-300">
                 <p>
                   <code>/threats</code> - Show recent threats
                 </p>
@@ -816,8 +849,8 @@ function DocumentationSidebar() {
             </div>
 
             <div>
-              <h3 className="font-semibold mb-2">Keyboard Shortcuts</h3>
-              <div className="space-y-1 text-sm text-gray-300">
+              <h3 className="font-semibold mb-2 text-sm sm:text-base">Keyboard Shortcuts</h3>
+              <div className="space-y-1 text-xs sm:text-sm text-gray-300">
                 <p>
                   <kbd>Ctrl + /</kbd> - Focus chat input
                 </p>
@@ -840,23 +873,23 @@ function MobileNavigation() {
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-gray-800 border-t border-gray-700 md:hidden z-50">
       <div className="flex items-center justify-around py-2">
-        <Button variant="ghost" size="sm" className="flex flex-col items-center gap-1 text-cyan-400">
+        <Button variant="ghost" size="sm" className="flex flex-col items-center gap-1 text-cyan-400 px-2">
           <Home className="h-4 w-4" />
           <span className="text-xs">Home</span>
         </Button>
-        <Button variant="ghost" size="sm" className="flex flex-col items-center gap-1 text-gray-400">
+        <Button variant="ghost" size="sm" className="flex flex-col items-center gap-1 text-gray-400 px-2">
           <AlertTriangle className="h-4 w-4" />
           <span className="text-xs">Alerts</span>
         </Button>
-        <Button variant="ghost" size="sm" className="flex flex-col items-center gap-1 text-gray-400">
+        <Button variant="ghost" size="sm" className="flex flex-col items-center gap-1 text-gray-400 px-2">
           <BarChart3 className="h-4 w-4" />
           <span className="text-xs">Trends</span>
         </Button>
-        <Button variant="ghost" size="sm" className="flex flex-col items-center gap-1 text-gray-400">
+        <Button variant="ghost" size="sm" className="flex flex-col items-center gap-1 text-gray-400 px-2">
           <Users className="h-4 w-4" />
           <span className="text-xs">Anomalies</span>
         </Button>
-        <Button variant="ghost" size="sm" className="flex flex-col items-center gap-1 text-gray-400">
+        <Button variant="ghost" size="sm" className="flex flex-col items-center gap-1 text-gray-400 px-2">
           <MessageSquare className="h-4 w-4" />
           <span className="text-xs">Chat</span>
         </Button>
@@ -867,18 +900,18 @@ function MobileNavigation() {
 
 function ConnectionStatus({ networkStatus }: { networkStatus: any }) {
   return (
-    <div className="fixed top-4 left-4 z-50">
-      <div className="flex items-center gap-2 bg-gray-800/90 backdrop-blur rounded-lg px-3 py-2 border border-gray-700">
+    <div className="fixed top-2 left-2 sm:top-4 sm:left-4 z-50">
+      <div className="flex items-center gap-1 sm:gap-2 bg-gray-800/90 backdrop-blur rounded-lg px-2 sm:px-3 py-1 sm:py-2 border border-gray-700">
         {networkStatus.connected ? (
-          <Wifi className="h-4 w-4 text-green-400" />
+          <Wifi className="h-3 w-3 sm:h-4 sm:w-4 text-green-400" />
         ) : (
-          <WifiOff className="h-4 w-4 text-red-400" />
+          <WifiOff className="h-3 w-3 sm:h-4 sm:w-4 text-red-400" />
         )}
         <span className="text-xs text-gray-400">
           {networkStatus.connected ? `${networkStatus.latency}ms` : "Offline"}
         </span>
         <div
-          className={`w-2 h-2 rounded-full ${
+          className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${
             networkStatus.quality === "excellent"
               ? "bg-green-400"
               : networkStatus.quality === "good"
@@ -1016,7 +1049,7 @@ export default function Dashboard() {
 
   const handleTriggerAnomaly = () => {
     const suspiciousAnomaly = {
-      user: "admin@company.com",
+      user: "admin@proton.me",
       anomaly: "Privilege Escalation",
       confidence: 95,
       lastSeen: "Just now",
@@ -1076,29 +1109,27 @@ export default function Dashboard() {
 
   return (
     <TooltipProvider>
-      <div className="min-h-screen font-inter bg-gray-900 text-white">
+      <div className="min-h-screen font-inter bg-gray-900 text-white pb-16 md:pb-0">
         <ConnectionStatus networkStatus={networkStatus} />
 
         {/* Header */}
-        <header className="bg-gray-900/95 backdrop-blur supports-[backdrop-filter]:bg-gray-900/60">
-          <div className="container mx-auto px-4 py-4">
+        <header className="bg-gray-900/95 backdrop-blur supports-[backdrop-filter]:bg-gray-900/60 sticky top-0 z-40">
+          <div className="container mx-auto px-2 sm:px-4 py-3 sm:py-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-cyan-500/20 rounded-lg">
-                  <Shield className="h-8 w-8 text-cyan-400" />
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="p-1.5 sm:p-2 bg-cyan-500/20 rounded-lg">
+                  <Shield className="h-6 w-6 sm:h-8 sm:w-8 text-cyan-400" />
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold">Senna AI</h1>
-                  <p className="text-sm text-gray-400">Autonomous Cyber Threat Response Agent</p>
+                  <h1 className="text-lg sm:text-2xl font-bold">Senna AI</h1>
+                  <p className="text-xs sm:text-sm text-gray-400 hidden sm:block">
+                    Autonomous Cyber Threat Response Agent
+                  </p>
                 </div>
-                <Badge className="bg-green-500/20 text-green-400 border-green-500/50 ml-4">
-                  <Activity className="h-3 w-3 mr-1" />
-                  LIVE DEMO
-                </Badge>
               </div>
 
-              <div className="flex items-center gap-4">
-                <div className="hidden md:flex items-center gap-4 text-sm">
+              <div className="flex items-center gap-2 sm:gap-4">
+                <div className="hidden lg:flex items-center gap-4 text-sm">
                   <div className="flex items-center gap-2">
                     <Target className="h-4 w-4 text-cyan-400" />
                     <span className="text-gray-400">Threats Blocked:</span>
@@ -1115,7 +1146,7 @@ export default function Dashboard() {
                   variant="ghost"
                   size="sm"
                   onClick={toggleTheme}
-                  className="hover:bg-gray-800"
+                  className="hover:bg-gray-800 p-2"
                   aria-label="Toggle theme"
                 >
                   {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
@@ -1125,15 +1156,15 @@ export default function Dashboard() {
                   <DropdownMenuTrigger asChild>
                     <Button
                       variant="ghost"
-                      className="flex items-center gap-2 hover:bg-gray-800"
+                      className="flex items-center gap-1 sm:gap-2 hover:bg-gray-800 p-1 sm:p-2"
                       aria-label="User menu"
                     >
-                      <Avatar className="h-8 w-8">
-                        <AvatarFallback className="bg-cyan-500/20 text-cyan-400 font-semibold">
+                      <Avatar className="h-6 w-6 sm:h-8 sm:w-8">
+                        <AvatarFallback className="bg-cyan-500/20 text-cyan-400 font-semibold text-xs sm:text-sm">
                           {getUserInitials()}
                         </AvatarFallback>
                       </Avatar>
-                      <ChevronDown className="h-4 w-4" />
+                      <ChevronDown className="h-3 w-3 sm:h-4 sm:w-4" />
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="bg-gray-800 border-gray-700">
@@ -1155,23 +1186,23 @@ export default function Dashboard() {
         </header>
 
         {/* Main Dashboard */}
-        <main className="container mx-auto px-4 py-6">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <main className="container mx-auto px-2 sm:px-4 py-3 sm:py-6">
+          <div className="grid grid-cols-1 xl:grid-cols-4 gap-3 sm:gap-6">
             {/* Left Column - Main Content */}
-            <div className="lg:col-span-3 space-y-6">
+            <div className="xl:col-span-3 space-y-3 sm:space-y-6">
               {/* Live Threat Feed */}
-              <Card className="bg-gray-800 border-gray-700 rounded-2xl shadow-md">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="flex items-center gap-2">
-                      <Bell className="h-5 w-5 text-red-400" />
+              <Card className="bg-gray-800 border-gray-700 rounded-xl sm:rounded-2xl shadow-md">
+                <CardHeader className="pb-3 sm:pb-6">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                      <Bell className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
                       Live Threat Alerts
-                      <Badge className="bg-red-500/20 text-red-400 border-red-500/50">
+                      <Badge className="bg-red-500/20 text-red-400 border-red-500/50 text-xs">
                         {threatAlerts.filter((t) => t.level === "Critical").length} Critical
                       </Badge>
                     </CardTitle>
                     <div className="flex items-center gap-2">
-                      <span className="text-sm text-gray-400">Auto-Response</span>
+                      <span className="text-xs sm:text-sm text-gray-400">Auto-Response</span>
                       <Switch
                         checked={autoResponse}
                         onCheckedChange={handleAutoResponseToggle}
@@ -1181,24 +1212,24 @@ export default function Dashboard() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4 max-h-96 overflow-y-auto">
+                  <div className="space-y-3 sm:space-y-4 max-h-64 sm:max-h-96 overflow-y-auto">
                     {threatAlerts.map((threat) => (
                       <div
                         key={threat.id}
-                        className={`p-4 bg-gray-700/50 rounded-lg border border-gray-600 transition-all duration-500 ${
+                        className={`p-3 sm:p-4 bg-gray-700/50 rounded-lg border border-gray-600 transition-all duration-500 ${
                           threat.isNew
                             ? "animate-in slide-in-from-right border-cyan-500 shadow-lg shadow-cyan-500/20"
                             : ""
                         }`}
                       >
-                        <div className="flex items-start justify-between mb-2">
-                          <h3 className="font-bold">{threat.title}</h3>
+                        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-2">
+                          <h3 className="font-bold text-sm sm:text-base">{threat.title}</h3>
                           <div className="flex items-center gap-2">
                             <ThreatLevelBadge level={threat.level} isNew={threat.isNew} />
                             <span className="text-xs text-gray-500">{threat.timestamp}</span>
                           </div>
                         </div>
-                        <p className="text-sm text-gray-400">{threat.description}</p>
+                        <p className="text-xs sm:text-sm text-gray-400">{threat.description}</p>
                       </div>
                     ))}
                   </div>
@@ -1206,12 +1237,11 @@ export default function Dashboard() {
               </Card>
 
               {/* Threat Trends Chart */}
-              <Card className="bg-gray-800 border-gray-700 rounded-2xl shadow-md">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <TrendingUp className="h-5 w-5 text-cyan-400" />
+              <Card className="bg-gray-800 border-gray-700 rounded-xl sm:rounded-2xl shadow-md">
+                <CardHeader className="pb-3 sm:pb-6">
+                  <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                    <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400" />
                     Threat Detections Over Time
-                    <Badge className="bg-cyan-500/20 text-cyan-400 border-cyan-500/50">Real-time</Badge>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -1220,12 +1250,14 @@ export default function Dashboard() {
               </Card>
 
               {/* Anomaly Detection */}
-              <Card className="bg-gray-800 border-gray-700 rounded-2xl shadow-md">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Users className="h-5 w-5 text-cyan-400" />
-                    User Behavior Anomalies
-                    <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/50">
+              <Card className="bg-gray-800 border-gray-700 rounded-xl sm:rounded-2xl shadow-md">
+                <CardHeader className="pb-3 sm:pb-6">
+                  <CardTitle className="flex flex-col sm:flex-row sm:items-center gap-2 text-base sm:text-lg">
+                    <div className="flex items-center gap-2">
+                      <Users className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400" />
+                      User Behavior Anomalies
+                    </div>
+                    <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/50 text-xs w-fit">
                       {anomalies.filter((a) => a.confidence >= 90).length} High Confidence
                     </Badge>
                   </CardTitle>
@@ -1235,10 +1267,10 @@ export default function Dashboard() {
                     <Table>
                       <TableHeader>
                         <TableRow className="border-gray-700">
-                          <TableHead className="text-gray-400">User</TableHead>
-                          <TableHead className="text-gray-400">Anomaly</TableHead>
-                          <TableHead className="text-gray-400">Confidence</TableHead>
-                          <TableHead className="text-gray-400">Last Seen</TableHead>
+                          <TableHead className="text-gray-400 text-xs sm:text-sm">User</TableHead>
+                          <TableHead className="text-gray-400 text-xs sm:text-sm">Anomaly</TableHead>
+                          <TableHead className="text-gray-400 text-xs sm:text-sm">Confidence</TableHead>
+                          <TableHead className="text-gray-400 text-xs sm:text-sm">Last Seen</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -1249,8 +1281,10 @@ export default function Dashboard() {
                               anomaly.isNew ? "bg-yellow-500/10 border-yellow-500/50" : ""
                             }`}
                           >
-                            <TableCell className="text-gray-300 text-xs">{anomaly.user}</TableCell>
-                            <TableCell className="text-gray-300 text-xs">{anomaly.anomaly}</TableCell>
+                            <TableCell className="text-gray-300 text-xs sm:text-sm">
+                              <div className="truncate max-w-[120px] sm:max-w-none">{anomaly.user}</div>
+                            </TableCell>
+                            <TableCell className="text-gray-300 text-xs sm:text-sm">{anomaly.anomaly}</TableCell>
                             <TableCell>
                               <ConfidenceBadge score={anomaly.confidence} isNew={anomaly.isNew} />
                             </TableCell>
@@ -1260,7 +1294,7 @@ export default function Dashboard() {
                                   <span className="text-xs text-gray-400 cursor-help">{anomaly.lastSeen}</span>
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                  <p>{anomaly.exactTime}</p>
+                                  <p className="text-xs">{anomaly.exactTime}</p>
                                 </TooltipContent>
                               </Tooltip>
                             </TableCell>
@@ -1274,7 +1308,7 @@ export default function Dashboard() {
             </div>
 
             {/* Right Column - Chat & Controls */}
-            <div className="space-y-6">
+            <div className="space-y-3 sm:space-y-6">
               {/* Demo Controls */}
               <DemoControls
                 onTriggerThreat={handleTriggerThreat}
@@ -1283,39 +1317,41 @@ export default function Dashboard() {
               />
 
               {/* AI Chat */}
-              <Card className="bg-gray-800 border-gray-700 rounded-2xl shadow-md">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <MessageSquare className="h-5 w-5 text-cyan-400" />
+              <Card className="bg-gray-800 border-gray-700 rounded-xl sm:rounded-2xl shadow-md">
+                <CardHeader className="pb-3 sm:pb-6">
+                  <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                    <MessageSquare className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400" />
                     Ask Senna AI
-                    <Badge className="bg-green-500/20 text-green-400 border-green-500/50">Online</Badge>
+                    <Badge className="bg-green-500/20 text-green-400 border-green-500/50 text-xs">Online</Badge>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4 mb-4 max-h-80 overflow-y-auto">
+                  <div className="space-y-3 sm:space-y-4 mb-3 sm:mb-4 max-h-60 sm:max-h-80 overflow-y-auto">
                     {messages.map((message) => (
                       <div
                         key={message.id}
-                        className={`flex gap-3 animate-in fade-in duration-500 ${
+                        className={`flex gap-2 sm:gap-3 animate-in fade-in duration-500 ${
                           message.type === "user" ? "justify-end" : "justify-start"
                         }`}
                       >
                         {message.type === "bot" && (
-                          <Avatar className="h-8 w-8">
-                            <AvatarFallback className="bg-cyan-500/20 text-cyan-400">🤖</AvatarFallback>
+                          <Avatar className="h-6 w-6 sm:h-8 sm:w-8">
+                            <AvatarFallback className="bg-cyan-500/20 text-cyan-400 text-xs sm:text-sm">
+                              🤖
+                            </AvatarFallback>
                           </Avatar>
                         )}
                         <div
-                          className={`max-w-[80%] p-3 rounded-lg ${
+                          className={`max-w-[85%] sm:max-w-[80%] p-2 sm:p-3 rounded-lg ${
                             message.type === "user" ? "bg-cyan-500/20 text-cyan-100" : "bg-gray-700 text-gray-300"
                           }`}
                         >
-                          <p className="text-sm">{message.message}</p>
+                          <p className="text-xs sm:text-sm">{message.message}</p>
                           <span className="text-xs text-gray-500 mt-1 block">{message.timestamp}</span>
                         </div>
                         {message.type === "user" && (
-                          <Avatar className="h-8 w-8">
-                            <AvatarFallback className="bg-cyan-500/20 text-cyan-400">
+                          <Avatar className="h-6 w-6 sm:h-8 sm:w-8">
+                            <AvatarFallback className="bg-cyan-500/20 text-cyan-400 text-xs sm:text-sm">
                               {getUserInitials()}
                             </AvatarFallback>
                           </Avatar>
@@ -1323,14 +1359,16 @@ export default function Dashboard() {
                       </div>
                     ))}
                     {isLoadingChat && (
-                      <div className="flex gap-3 justify-start">
-                        <Avatar className="h-8 w-8">
-                          <AvatarFallback className="bg-cyan-500/20 text-cyan-400">🤖</AvatarFallback>
+                      <div className="flex gap-2 sm:gap-3 justify-start">
+                        <Avatar className="h-6 w-6 sm:h-8 sm:w-8">
+                          <AvatarFallback className="bg-cyan-500/20 text-cyan-400 text-xs sm:text-sm">
+                            🤖
+                          </AvatarFallback>
                         </Avatar>
-                        <div className="bg-gray-700 text-gray-300 p-3 rounded-lg">
+                        <div className="bg-gray-700 text-gray-300 p-2 sm:p-3 rounded-lg">
                           <div className="flex items-center gap-2">
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                            <span className="text-sm">Analyzing...</span>
+                            <Loader2 className="h-3 w-3 sm:h-4 sm:w-4 animate-spin" />
+                            <span className="text-xs sm:text-sm">Analyzing...</span>
                           </div>
                         </div>
                       </div>
@@ -1343,12 +1381,12 @@ export default function Dashboard() {
                       value={chatInput}
                       onChange={(e) => setChatInput(e.target.value)}
                       onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
-                      className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
+                      className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 text-sm"
                       disabled={isLoadingChat}
                     />
                     <Button
                       onClick={handleSendMessage}
-                      className="bg-cyan-500 hover:bg-cyan-600 text-white"
+                      className="bg-cyan-500 hover:bg-cyan-600 text-white p-2"
                       disabled={isLoadingChat}
                     >
                       <Send className="h-4 w-4" />
@@ -1361,18 +1399,28 @@ export default function Dashboard() {
         </main>
 
         {/* Footer */}
-        <footer className="border-t border-cyan-500 bg-gray-900/95 mt-12">
-          <div className="container mx-auto px-4 py-6">
+        <footer className="border-t border-cyan-500 bg-gray-900/95 mt-6 sm:mt-12">
+          <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-6">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-2 text-cyan-400">
-                <Zap className="h-5 w-5" />
-                <span className="text-sm">Senna AI is monitoring your stack in real-time — no action required.</span>
+                <Zap className="h-4 w-4 sm:h-5 sm:w-5" />
+                <span className="text-xs sm:text-sm text-center">
+                  Senna AI is monitoring your stack in real-time — no action required.
+                </span>
               </div>
               <div className="flex items-center gap-4">
-                <Button variant="ghost" size="sm" className="text-gray-400 hover:text-white hover:underline">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-gray-400 hover:text-white hover:underline text-xs sm:text-sm"
+                >
                   GitHub Repo
                 </Button>
-                <Button variant="ghost" size="sm" className="text-gray-400 hover:text-white hover:underline">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-gray-400 hover:text-white hover:underline text-xs sm:text-sm"
+                >
                   Documentation
                 </Button>
               </div>

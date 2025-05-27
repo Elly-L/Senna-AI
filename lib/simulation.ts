@@ -71,15 +71,21 @@ export class ThreatSimulator {
         "File Access Pattern",
       ],
       users: [
-        "john.doe@company.com",
-        "sarah.smith@company.com",
-        "mike.wilson@company.com",
-        "alice.johnson@company.com",
-        "bob.brown@company.com",
-        "carol.davis@company.com",
-        "david.miller@company.com",
-        "emma.garcia@company.com",
-        "frank.rodriguez@company.com",
+        "john.doe@gmail.com",
+        "sarah.smith@proton.me",
+        "mike.wilson@outlook.com",
+        "alice.johnson@yahoo.com",
+        "bob.brown@gmail.com",
+        "carol.davis@proton.me",
+        "david.miller@hotmail.com",
+        "emma.garcia@gmail.com",
+        "frank.rodriguez@icloud.com",
+        "lisa.chen@gmail.com",
+        "james.taylor@proton.me",
+        "maria.gonzalez@outlook.com",
+        "robert.anderson@yahoo.com",
+        "jennifer.white@gmail.com",
+        "michael.lee@proton.me",
       ],
     },
   ]
@@ -134,9 +140,9 @@ export class ThreatSimulator {
     setTimeout(() => this.updateTrends(), 6000)
 
     // Set up regular intervals
-    setInterval(() => this.generateThreat(), 15000 + Math.random() * 20000) // 15-35s
-    setInterval(() => this.generateAnomaly(), 25000 + Math.random() * 30000) // 25-55s
-    setInterval(() => this.updateTrends(), 30000) // 30s
+    setInterval(() => this.generateThreat(), 8000 + Math.random() * 12000) // 8-20s instead of 15-35s
+    setInterval(() => this.generateAnomaly(), 15000 + Math.random() * 20000) // 15-35s instead of 25-55s
+    setInterval(() => this.updateTrends(), 5000) // 5s instead of 30s for more dynamic charts
   }
 
   stop() {
@@ -187,10 +193,10 @@ export class ThreatSimulator {
     const trends = {
       timestamp: new Date().toISOString(),
       counts: {
-        critical: Math.floor(Math.random() * 5),
-        high: Math.floor(Math.random() * 8) + 2,
-        medium: Math.floor(Math.random() * 12) + 5,
-        low: Math.floor(Math.random() * 15) + 8,
+        critical: Math.floor(Math.random() * 8), // Increased range
+        high: Math.floor(Math.random() * 15) + 2,
+        medium: Math.floor(Math.random() * 20) + 5,
+        low: Math.floor(Math.random() * 25) + 8,
       },
     }
 
